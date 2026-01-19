@@ -1,5 +1,5 @@
 import PostCard from '@/components/PostCard'
-import { getPosts, getTags } from '../../posts/get-posts'
+import { getPosts, getTags } from '@/lib/get-posts'
 
 type Props = {
   params: Promise<{ tag: string }>

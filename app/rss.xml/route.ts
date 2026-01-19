@@ -1,4 +1,4 @@
-import { getPosts } from '../posts/get-posts.js'
+import { getPosts } from '@/lib/get-posts'
  
 const CONFIG = {
   title: '헥토파이낸셜 기술 블로그',

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
-import { getPosts, getTags } from './posts/get-posts'
+import { getPosts, getTags } from '@/lib/get-posts'
 
 export default async function HomePage() {
   const tags = await getTags()

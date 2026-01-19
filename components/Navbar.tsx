@@ -9,9 +9,6 @@ export default function Navbar() {
         </Link>
 
         <div className="flex gap-6 items-center">
-          <Link href="/posts" className="text-foreground font-medium">
-            Posts
-          </Link>
           <Link
             href="https://www.hectofinancial.co.kr"
             target="_blank"
