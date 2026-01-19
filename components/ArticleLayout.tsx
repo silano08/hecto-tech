@@ -29,9 +29,22 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
       <article className="min-w-0">
         {children}
 
-        {title && (
-          <div className="mt-8 lg:mt-12 pt-6 border-t border-border">
-            <ShareButtons title={title} />
+        {(title || tags) && (
+          <div className="mt-8 lg:mt-12 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4">
+            {tags && tags.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {tags.map(tag => (
+                  <Link
+                    key={tag}
+                    href={`/tags/${tag}`}
+                    className="bg-gray-100 dark:bg-gray-800 text-foreground px-3 py-1 rounded-full text-sm hover:bg-primary hover:text-white transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            )}
+            {title && <ShareButtons title={title} />}
           </div>
         )}
 
