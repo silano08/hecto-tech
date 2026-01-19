@@ -1,7 +1,7 @@
 import { getPosts } from '../posts/get-posts.js'
  
 const CONFIG = {
-  title: '헥토 파이낸셜 기술 블로그',
+  title: '헥토파이낸셜 기술 블로그',
   siteUrl: 'https://tech.hectofinancial.co.kr',
   description: 'Latest blog posts',
   lang: 'en-us'
