@@ -1,16 +1,32 @@
 import Link from 'next/link'
 import PostCard from '@/components/PostCard'
+import Pagination from '@/components/Pagination'
 import { getPosts, getTags } from '@/lib/get-posts'
 
-export default async function HomePage() {
+const POSTS_PER_PAGE = 10
+
+type Props = {
+  searchParams: Promise<{ page?: string }>
+}
+
+export default async function HomePage({ searchParams }: Props) {
+  const { page } = await searchParams
+  const currentPage = Math.max(1, parseInt(page || '1', 10))
+
   const tags = await getTags()
-  const posts = await getPosts()
+  const allPosts = await getPosts()
   const allTags: Record<string, number> = Object.create(null)
 
   for (const tag of tags) {
     allTags[tag] ??= 0
     allTags[tag] += 1
   }
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE)
+  const posts = allPosts.slice(
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE
+  )
 
   return (
     <div>
@@ -42,6 +58,8 @@ export default async function HomePage() {
           <PostCard key={post.route} post={post} />
         ))}
       </section>
+
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   )
 }
