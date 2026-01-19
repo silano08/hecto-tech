@@ -33,12 +33,12 @@ export default function PostCard({ post }: PostCardProps) {
         </p>
       )}
 
-      <div className="flex gap-4 items-center text-sm text-muted">
+      <div className="flex flex-wrap gap-2 sm:gap-4 items-center text-sm text-muted">
         {date && (
           <time>{new Date(date).toLocaleDateString('ko-KR')}</time>
         )}
         {tags && tags.length > 0 && (
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {tags.map(tag => (
               <Link
                 key={tag}

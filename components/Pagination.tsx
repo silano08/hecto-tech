@@ -40,31 +40,31 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
   }
 
   return (
-    <nav className="flex justify-center items-center gap-1 mt-12">
+    <nav className="flex justify-center items-center gap-0.5 sm:gap-1 mt-8 lg:mt-12">
       {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground"
+          className="p-1.5 sm:p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground"
           aria-label="이전 페이지"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
         </Link>
       ) : (
-        <span className="p-2 text-muted opacity-50">
-          <ChevronLeft size={20} />
+        <span className="p-1.5 sm:p-2 text-muted opacity-50">
+          <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
         </span>
       )}
 
       {pages.map((page, index) =>
         page === 'ellipsis' ? (
-          <span key={`ellipsis-${index}`} className="px-3 py-2 text-muted">
+          <span key={`ellipsis-${index}`} className="px-2 sm:px-3 py-1.5 sm:py-2 text-muted text-sm sm:text-base">
             ...
           </span>
         ) : (
           <Link
             key={page}
             href={getPageUrl(page)}
-            className={`px-3 py-2 rounded-md ${
+            className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-md text-sm sm:text-base ${
               page === currentPage
                 ? 'bg-primary text-white'
                 : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground'
@@ -78,14 +78,14 @@ export default function Pagination({ currentPage, totalPages, basePath = '' }: P
       {currentPage < totalPages ? (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground"
+          className="p-1.5 sm:p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground"
           aria-label="다음 페이지"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={18} className="sm:w-5 sm:h-5" />
         </Link>
       ) : (
-        <span className="p-2 text-muted opacity-50">
-          <ChevronRight size={20} />
+        <span className="p-1.5 sm:p-2 text-muted opacity-50">
+          <ChevronRight size={18} className="sm:w-5 sm:h-5" />
         </span>
       )}
     </nav>

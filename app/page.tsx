@@ -1,7 +1,6 @@
-import Link from 'next/link'
 import PostCard from '@/components/PostCard'
 import Pagination from '@/components/Pagination'
-import { getPosts, getTags } from '@/lib/get-posts'
+import { getPosts } from '@/lib/get-posts'
 
 const POSTS_PER_PAGE = 10
 
@@ -30,22 +29,22 @@ export default async function HomePage({ searchParams }: Props) {
 
   return (
     <div>
-      <section className="mb-12">
-        <h1 className="text-5xl mt-0 mb-2">
+      <section className="mb-8 lg:mb-12">
+        <h1 className="text-2xl sm:text-3xl lg:text-5xl mt-0 mb-2">
           <span className="text-primary">Hecto Financial</span> <span className="text-black dark:text-white">Tech Blog</span>
         </h1>
-        <p className="text-muted text-lg">
+        <p className="text-muted text-base lg:text-lg">
           헥토파이낸셜 개발팀의 기술 블로그입니다.
         </p>
       </section>
 
-      <section className="mb-8">
+      <section className="mb-6 lg:mb-8">
         <div className="flex flex-wrap gap-2">
           {Object.entries(allTags).map(([tag, count]) => (
             <Link
               key={tag}
               href={`/tags/${tag}`}
-              className="bg-gray-100 dark:bg-gray-800 text-foreground px-3 py-1 rounded-full text-sm"
+              className="bg-gray-100 dark:bg-gray-800 text-foreground px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
             >
               {tag} ({count})
             </Link>
