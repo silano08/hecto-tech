@@ -28,8 +28,11 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
   return (
     <div className={`grid gap-8 lg:gap-12 items-start ${hasToc ? 'lg:grid-cols-[1fr_220px]' : 'grid-cols-1'}`}>
       <article className="min-w-0">
+        {title && (
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 mt-0">{title}</h1>
+        )}
         {(authors || date) && (
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted mb-6 -mt-4">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted mb-8">
             {authors && authors.length > 0 && (
               <span className="font-medium text-foreground">{authors.join(', ')}</span>
             )}
@@ -39,7 +42,9 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
             )}
           </div>
         )}
-        {children}
+        <div className="[&>h1:first-child]:hidden">
+          {children}
+        </div>
 
         {(title || tags) && (
           <div className="mt-8 lg:mt-12 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4">
