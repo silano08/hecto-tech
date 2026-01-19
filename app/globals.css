@@ -14,13 +14,11 @@
   --border: #e5e7eb;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
-    --muted: #9ca3af;
-    --border: #1f2937;
-  }
+.dark {
+  --background: #000000;
+  --foreground: #ffffff;
+  --muted: #9ca3af;
+  --border: #1f2937;
 }
 
 @layer base {
@@ -133,14 +131,12 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  code {
-    background-color: #1f2937;
-  }
+.dark code {
+  background-color: #1f2937;
+}
 
-  th {
-    background-color: #1f2937;
-  }
+.dark th {
+  background-color: #1f2937;
 }
 
 /* Shiki / rehype-pretty-code styles */

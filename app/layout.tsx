@@ -1,6 +1,8 @@
 import { Noto_Sans_KR, JetBrains_Mono } from 'next/font/google'
+import { ThemeProvider } from 'next-themes'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import ConsoleEasterEgg from '@/components/ConsoleEasterEgg'
 import './globals.css'
 
 const notoSansKR = Noto_Sans_KR({
@@ -25,15 +27,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
-        <div className="max-w-4xl mx-auto px-6 min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </div>
+        <ConsoleEasterEgg />
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="max-w-4xl mx-auto px-6 min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
