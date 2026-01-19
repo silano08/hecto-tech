@@ -1,12 +1,9 @@
-import { useMDXComponents as getThemeComponents } from 'nextra-theme-blog'
-import { MDXComponents } from 'nextra/mdx-components'
+import type { MDXComponents } from 'mdx/types'
 import ArticleLayout from '@/components/ArticleLayout'
 
-const themeComponents = getThemeComponents()
-
-export function useMDXComponents(components?: MDXComponents) {
+export function useMDXComponents(components?: MDXComponents): MDXComponents {
   return {
-    ...themeComponents,
     ...components,
+    wrapper: ArticleLayout,
   }
 }

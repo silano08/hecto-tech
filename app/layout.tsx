@@ -1,63 +1,39 @@
-import { Noto_Sans_KR } from 'next/font/google'
-import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
-import { Banner, Head, Search } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
-import 'nextra-theme-blog/style.css'
+import { Noto_Sans_KR, JetBrains_Mono } from 'next/font/google'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import './globals.css'
 
 const notoSansKR = Noto_Sans_KR({
-    variable: '--font-noto-sans-kr',
-    subsets: ['latin'],
+  variable: '--font-noto-sans-kr',
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
 })
- 
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-jetbrains-mono',
+  subsets: ['latin'],
+})
+
 export const metadata = {
-  title: '헥토파이낸셜 기술 블로그'
+  title: '헥토파이낸셜 기술 블로그',
+  description: '헥토파이낸셜 개발팀의 기술 블로그입니다.',
 }
- 
-export default async function RootLayout({
+
+export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const banner = (
-    <Banner storageKey="4.0-release">
-      🎉 Nextra 4.0 is released.{' '}
-      <a
-        href="#"
-        style={{
-          textDecoration: 'underline',
-          textUnderlinePosition: 'from-font'
-        }}
-      >
-        Read more →
-      </a>
-    </Banner>
-  )
- 
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <Head backgroundColor={{ dark: '#0f172a', light: '#fefce8' }} />
-      <body className={`${notoSansKR.variable} antialiased`}>
-        <Layout banner={banner}>
-          <Navbar pageMap={await getPageMap()}>
-            <Search />
-            <ThemeSwitch />
-          </Navbar>
- 
-          {children}
- 
-          <Footer>
-            <abbr
-              title="This site and all its content are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
-              style={{ cursor: 'help' }}
-            >
-              CC BY-NC 4.0
-            </abbr>{' '}
-            {new Date().getFullYear()} © Dimitri POSTOLOV.
-            <a href="/feed.xml" style={{ float: 'right' }}>
-              RSS
-            </a>
-          </Footer>
-        </Layout>
+    <html lang="ko">
+      <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
+        <div className="max-w-4xl mx-auto px-6 min-h-screen flex flex-col">
+          <Navbar />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   )
