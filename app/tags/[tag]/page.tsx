@@ -12,7 +12,7 @@ type Props = {
 export async function generateMetadata(props: Props) {
   const params = await props.params
   return {
-    title: `Posts Tagged with "${decodeURIComponent(params.tag)}"`
+    title: `"${decodeURIComponent(params.tag)}" 태그 글 목록`
   }
 }
 
@@ -26,10 +26,10 @@ export default async function TagPage(props: Props) {
   const { page } = await props.searchParams
   const currentPage = Math.max(1, parseInt(page || '1', 10))
 
-  const { title } = await generateMetadata(props)
+  const tag = decodeURIComponent(params.tag)
   const allPosts = await getPosts()
   const filteredPosts = allPosts.filter(post =>
-    post.frontMatter.tags.includes(decodeURIComponent(params.tag))
+    post.frontMatter.tags.includes(tag)
   )
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
@@ -40,7 +40,7 @@ export default async function TagPage(props: Props) {
 
   return (
     <>
-      <h1>{title}</h1>
+      <h1>#{tag} 태그 글 목록</h1>
       {posts.map(post => (
         <PostCard key={post.route} post={post} />
       ))}
