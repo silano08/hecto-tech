@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
 import Toc from '@/components/Toc'
 import Comments from '@/components/Comments'
+import PostNavigation from '@/components/PostNavigation'
+import RelatedPosts from '@/components/RelatedPosts'
 
 interface TocItem {
   id: string
@@ -15,8 +17,10 @@ interface ArticleLayoutProps {
   metadata?: Record<string, unknown>
 }
 
-export default function ArticleLayout({ children, toc }: ArticleLayoutProps) {
+export default function ArticleLayout({ children, toc, metadata }: ArticleLayoutProps) {
   const hasToc = toc && toc.length > 0
+  const date = metadata?.date as string | undefined
+  const tags = metadata?.tags as string[] | undefined
 
   return (
     <div className={`grid gap-12 items-start ${hasToc ? 'grid-cols-[1fr_220px]' : 'grid-cols-1'}`}>
@@ -39,6 +43,10 @@ export default function ArticleLayout({ children, toc }: ArticleLayoutProps) {
             <ExternalLink size={16} />
           </Link>
         </div>
+
+        {date && <PostNavigation currentDate={date} />}
+
+        {date && tags && <RelatedPosts currentDate={date} tags={tags} />}
 
         <div className="mt-12">
           <Comments />
