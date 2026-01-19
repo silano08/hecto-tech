@@ -1,8 +1,11 @@
 'use client'
 
 import Giscus from '@giscus/react'
+import { useTheme } from 'next-themes'
 
 export default function Comments() {
+  const { resolvedTheme } = useTheme()
+
   return (
     <Giscus
       repo="soulee-dev/giscus-test"
@@ -14,7 +17,7 @@ export default function Comments() {
       reactionsEnabled="1"
       emitMetadata="0"
       inputPosition="bottom"
-      theme="preferred_color_scheme"
+      theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
       lang="ko"
     />
   )
