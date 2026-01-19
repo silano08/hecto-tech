@@ -23,10 +23,22 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
   const title = metadata?.title as string | undefined
   const date = metadata?.date as string | undefined
   const tags = metadata?.tags as string[] | undefined
+  const authors = metadata?.authors as string[] | undefined
 
   return (
     <div className={`grid gap-8 lg:gap-12 items-start ${hasToc ? 'lg:grid-cols-[1fr_220px]' : 'grid-cols-1'}`}>
       <article className="min-w-0">
+        {(authors || date) && (
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted mb-6 -mt-4">
+            {authors && authors.length > 0 && (
+              <span className="font-medium text-foreground">{authors.join(', ')}</span>
+            )}
+            {authors && date && <span>·</span>}
+            {date && (
+              <time>{new Date(date).toLocaleDateString('ko-KR')}</time>
+            )}
+          </div>
+        )}
         {children}
 
         {(title || tags) && (

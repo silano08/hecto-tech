@@ -9,6 +9,7 @@ interface PostCardProps {
       description?: string
       date?: string
       tags?: string[]
+      authors?: string[]
     }
   }
 }
@@ -17,7 +18,7 @@ export default function PostCard({ post }: PostCardProps) {
   const title = post.frontMatter?.title || post.title || 'Untitled'
   const description = post.frontMatter?.description
   const date = post.frontMatter?.date
-  const tags = post.frontMatter?.tags
+  const authors = post.frontMatter?.authors
 
   return (
     <article className="border-b border-border py-6">
@@ -34,21 +35,11 @@ export default function PostCard({ post }: PostCardProps) {
       )}
 
       <div className="flex flex-wrap gap-2 sm:gap-4 items-center text-sm text-muted">
+        {authors && authors.length > 0 && (
+          <span>{authors.join(', ')}</span>
+        )}
         {date && (
           <time>{new Date(date).toLocaleDateString('ko-KR')}</time>
-        )}
-        {tags && tags.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {tags.map(tag => (
-              <Link
-                key={tag}
-                href={`/tags/${tag}`}
-                className="bg-primary text-white px-2 py-0.5 rounded text-xs"
-              >
-                {tag}
-              </Link>
-            ))}
-          </div>
         )}
       </div>
     </article>
