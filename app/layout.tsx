@@ -1,10 +1,16 @@
+import { Noto_Sans_KR } from 'next/font/google'
 import { Footer, Layout, Navbar, ThemeSwitch } from 'nextra-theme-blog'
 import { Banner, Head, Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import 'nextra-theme-blog/style.css'
+
+const notoSansKR = Noto_Sans_KR({
+    variable: '--font-noto-sans-kr',
+    subsets: ['latin'],
+})
  
 export const metadata = {
-  title: '헥토 파이낸셜 기술 블로그'
+  title: '헥토파이낸셜 기술 블로그'
 }
  
 export default async function RootLayout({
@@ -28,9 +34,9 @@ export default async function RootLayout({
   )
  
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <Head backgroundColor={{ dark: '#0f172a', light: '#fefce8' }} />
-      <body>
+      <body className={`${notoSansKR.variable} antialiased`}>
         <Layout banner={banner}>
           <Navbar pageMap={await getPageMap()}>
             <Search />
