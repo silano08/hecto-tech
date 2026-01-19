@@ -51,7 +51,7 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
                     href={`/tags/${tag}`}
                     className="bg-gray-100 dark:bg-gray-800 text-foreground px-3 py-1 rounded-full text-sm hover:bg-primary hover:text-white transition-colors"
                   >
-                    {tag}
+                    #{tag}
                   </Link>
                 ))}
               </div>
