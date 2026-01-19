@@ -80,7 +80,7 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
         <ConsoleEasterEgg />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
             <Navbar />
             <main className="flex-1">
               {children}
