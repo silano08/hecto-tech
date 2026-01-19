@@ -1,4 +1,4 @@
-import { PostCard } from 'nextra-theme-blog'
+import PostCard from '@/components/PostCard'
 import { getPosts, getTags } from '../../posts/get-posts'
 
 type Props = {

@@ -3,7 +3,7 @@ import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { useMDXComponents as getMDXComponents } from '@/mdx-components'
 
 type Props = {
-  params: Promise<{ mdxPath?: string[] }>
+  params: Promise<{ mdxPath: string[] }>
 }
 
 export const generateStaticParams = generateStaticParamsFor('mdxPath')
