@@ -1,5 +1,6 @@
 import { Noto_Sans_KR, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { LanguageProvider } from '@/components/LanguageProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ConsoleEasterEgg from '@/components/ConsoleEasterEgg'
@@ -71,13 +72,15 @@ export default function RootLayout({
       <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
         <ConsoleEasterEgg />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <LanguageProvider>
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

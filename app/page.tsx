@@ -3,6 +3,7 @@ import PostCard from '@/components/PostCard'
 import Pagination from '@/components/Pagination'
 import SearchBar from '@/components/SearchBar'
 import CategoryTabs from '@/components/CategoryTabs'
+import HeroBanner from '@/components/HeroBanner'
 import { filterPosts } from '@/lib/get-posts'
 import type { Category } from '@/types/post'
 
@@ -30,14 +31,7 @@ export default async function HomePage({ searchParams }: Props) {
 
   return (
     <div>
-      <section className="mb-8 lg:mb-12">
-        <h1 className="text-2xl sm:text-3xl lg:text-5xl mt-0 mb-2">
-          <span className="text-primary">Hecto Financial</span> <span className="text-black dark:text-white">Tech Blog</span>
-        </h1>
-        <p className="text-muted text-base lg:text-lg">
-          헥토파이낸셜 개발팀의 기술 블로그입니다.
-        </p>
-      </section>
+      <HeroBanner />
 
       {/* 검색 + 카테고리 */}
       <section className="mb-8 space-y-4">

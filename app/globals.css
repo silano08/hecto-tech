@@ -278,3 +278,105 @@ button {
 .dark .bg-gray-100 {
   background-color: #1f2937 !important;
 }
+
+/* Tech Blog Hero Banner */
+.tech-blog-banner {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    135deg,
+    #0f0f12 0%,
+    #14151a 60%,
+    #1b1d23 100%
+  );
+  color: #ffffff;
+}
+
+.banner-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(255, 97, 20, 0.2),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(255, 140, 60, 0.12),
+      transparent 45%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  pointer-events: none;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #ff6114;
+  margin-bottom: 1rem;
+}
+
+.banner-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 1.25rem 0;
+  color: #ffffff;
+}
+
+.banner-subtitle {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 32rem;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .tech-blog-banner {
+    min-height: 360px;
+  }
+
+  .banner-content {
+    padding: 4rem 3rem;
+  }
+
+  .banner-title {
+    font-size: 3rem;
+  }
+
+  .banner-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .banner-content {
+    padding: 4rem;
+  }
+
+  .banner-title {
+    font-size: 3.5rem;
+  }
+}

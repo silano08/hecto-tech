@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
+import LanguageToggle from '@/components/LanguageToggle'
 
 export default function Navbar() {
   return (
@@ -9,7 +10,10 @@ export default function Navbar() {
           <span className="text-primary">Hecto Financial</span> <span className="text-black dark:text-white">Tech Blog</span>
         </Link>
 
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <LanguageToggle />
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   )
