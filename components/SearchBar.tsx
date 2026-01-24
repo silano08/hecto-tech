@@ -3,12 +3,11 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
+import { useLanguage } from './LanguageProvider'
 
-interface SearchBarProps {
-  placeholder?: string
-}
-
-export default function SearchBar({ placeholder = '제목, 설명, 태그 검색...' }: SearchBarProps) {
+export default function SearchBar() {
+  const { language } = useLanguage()
+  const placeholder = language === 'ko' ? '제목, 설명, 태그 검색...' : 'Search title, description, tags...'
   const router = useRouter()
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
@@ -62,7 +61,7 @@ export default function SearchBar({ placeholder = '제목, 설명, 태그 검색
             type="button"
             onClick={handleClear}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-foreground transition-colors"
-            aria-label="검색어 지우기"
+            aria-label={language === 'ko' ? '검색어 지우기' : 'Clear search'}
           >
             <X size={18} />
           </button>

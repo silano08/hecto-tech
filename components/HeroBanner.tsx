@@ -12,7 +12,7 @@ export default function HeroBanner() {
 
       {/* Content */}
       <div className="banner-content">
-        <p className="banner-eyebrow">HECTO TECH BLOG</p>
+        <span className="banner-eyebrow">TECH BLOG</span>
 
         <h1 className="banner-title">
           {language === 'ko' ? (
@@ -31,9 +31,19 @@ export default function HeroBanner() {
         </h1>
 
         <p className="banner-subtitle">
-          {language === 'ko'
-            ? '기술로 문제를 해결하고, 실행으로 가치를 증명합니다'
-            : 'Solving problems with technology, proving value through execution'}
+          {language === 'ko' ? (
+            <>
+              기술로 빠르게 검증하고
+              <br />
+              실행으로 결과를 만든다
+            </>
+          ) : (
+            <>
+              Validate fast with technology
+              <br />
+              Deliver results through execution
+            </>
+          )}
         </p>
       </div>
     </section>

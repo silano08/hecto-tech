@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
+import { useLanguage } from './LanguageProvider'
 
 interface PostCardProps {
   post: {
@@ -17,12 +20,22 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post }: PostCardProps) {
+  const { language } = useLanguage()
   const title = post.frontMatter?.title || post.title || 'Untitled'
   const description = post.frontMatter?.description
   const date = post.frontMatter?.date
   const authors = post.frontMatter?.authors
   const tags = post.frontMatter?.tags
   const thumbnail = post.frontMatter?.thumbnail
+
+  const formatDate = (dateStr: string) => {
+    const locale = language === 'ko' ? 'ko-KR' : 'en-US'
+    return new Date(dateStr).toLocaleDateString(locale, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    })
+  }
 
   return (
     <article className="border-b border-border py-6">
@@ -69,7 +82,7 @@ export default function PostCard({ post }: PostCardProps) {
               <span className="text-border">|</span>
             )}
             {date && (
-              <time>{new Date(date).toLocaleDateString('ko-KR')}</time>
+              <time>{formatDate(date)}</time>
             )}
             {((authors && authors.length > 0) || date) && tags && tags.length > 0 && (
               <span className="text-border">|</span>

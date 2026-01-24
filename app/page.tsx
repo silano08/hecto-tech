@@ -4,6 +4,8 @@ import Pagination from '@/components/Pagination'
 import SearchBar from '@/components/SearchBar'
 import CategoryTabs from '@/components/CategoryTabs'
 import HeroBanner from '@/components/HeroBanner'
+import SearchResultsInfo from '@/components/SearchResultsInfo'
+import EmptyState from '@/components/EmptyState'
 import { filterPosts } from '@/lib/get-posts'
 import type { Category } from '@/types/post'
 
@@ -43,17 +45,7 @@ export default async function HomePage({ searchParams }: Props) {
         </Suspense>
       </section>
 
-      {/* 검색 결과 정보 */}
-      {(q || currentCategory !== '전체') && (
-        <section className="mb-6">
-          <p className="text-sm text-muted">
-            {q && <span>"{q}" 검색 결과</span>}
-            {q && currentCategory !== '전체' && <span> · </span>}
-            {currentCategory !== '전체' && <span>{currentCategory} 카테고리</span>}
-            <span className="ml-2">({allPosts.length}개의 글)</span>
-          </p>
-        </section>
-      )}
+      <SearchResultsInfo query={q} category={currentCategory} totalPosts={allPosts.length} />
 
       <section>
         {posts.length > 0 ? (
@@ -61,10 +53,7 @@ export default async function HomePage({ searchParams }: Props) {
             <PostCard key={post.route} post={post} />
           ))
         ) : (
-          <div className="py-12 text-center">
-            <p className="text-muted text-lg">검색 결과가 없습니다.</p>
-            <p className="text-muted text-sm mt-2">다른 검색어나 카테고리를 시도해보세요.</p>
-          </div>
+          <EmptyState />
         )}
       </section>
 

@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
+import { useLanguage } from './LanguageProvider'
 
 function XIcon({ size = 18 }: { size?: number }) {
   return (
@@ -27,6 +30,8 @@ function GitHubIcon({ size = 18 }: { size?: number }) {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { language } = useLanguage()
+  const t = (ko: string, en: string) => language === 'ko' ? ko : en
 
   return (
     <footer className="mt-12 lg:mt-16 bg-black dark:bg-white -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
@@ -43,7 +48,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  공식 홈페이지
+                  {t('공식 홈페이지', 'Official Website')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
@@ -53,7 +58,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  채용
+                  {t('채용', 'Careers')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
@@ -68,9 +73,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 2: 개발자 리소스 */}
+          {/* Column 2: Developer Resources */}
           <div>
-            <h3 className="font-semibold text-white dark:text-black mb-4">개발자 리소스</h3>
+            <h3 className="font-semibold text-white dark:text-black mb-4">{t('개발자 리소스', 'Developer')}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
@@ -88,7 +93,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  오픈소스
+                  {t('오픈소스', 'Open Source')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
@@ -98,16 +103,16 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  API 문서
+                  {t('API 문서', 'API Docs')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: 고객 지원 */}
+          {/* Column 3: Support */}
           <div>
-            <h3 className="font-semibold text-white dark:text-black mb-4">고객 지원</h3>
+            <h3 className="font-semibold text-white dark:text-black mb-4">{t('고객 지원', 'Support')}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
@@ -115,7 +120,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  문의하기
+                  {t('문의하기', 'Contact Us')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
@@ -132,9 +137,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: 회사 정보 */}
+          {/* Column 4: Company */}
           <div>
-            <h3 className="font-semibold text-white dark:text-black mb-4">회사 정보</h3>
+            <h3 className="font-semibold text-white dark:text-black mb-4">{t('회사 정보', 'Company')}</h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <Link
@@ -142,7 +147,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  회사 소개
+                  {t('회사 소개', 'About Us')}
                   <ExternalLink size={12} />
                 </Link>
               </li>
@@ -152,7 +157,7 @@ export default function Footer() {
                   target="_blank"
                   className="text-gray-400 dark:text-gray-600 hover:text-primary transition-colors inline-flex items-center gap-1"
                 >
-                  보도자료
+                  {t('보도자료', 'Press')}
                   <ExternalLink size={12} />
                 </Link>
               </li>

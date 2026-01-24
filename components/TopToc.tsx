@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
+import { useLanguage } from './LanguageProvider'
 
 interface TocItem {
   id: string
@@ -15,6 +16,7 @@ interface TopTocProps {
 
 export default function TopToc({ toc }: TopTocProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const { language } = useLanguage()
 
   if (!toc || toc.length === 0) return null
 
@@ -33,7 +35,7 @@ export default function TopToc({ toc }: TopTocProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between px-4 py-3 text-left font-medium text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
       >
-        <span className="text-sm">목차</span>
+        <span className="text-sm">{language === 'ko' ? '목차' : 'Table of Contents'}</span>
         {isOpen ? (
           <ChevronUp size={18} className="text-muted" />
         ) : (
