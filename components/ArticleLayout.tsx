@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { ExternalLink } from 'lucide-react'
-import Toc from '@/components/Toc'
+import TopToc from '@/components/TopToc'
+import ArticleSidebar from '@/components/ArticleSidebar'
 import Comments from '@/components/Comments'
 import PostNavigation from '@/components/PostNavigation'
 import RelatedPosts from '@/components/RelatedPosts'
-import ShareButtons from '@/components/ShareButtons'
 
 interface TocItem {
   id: string
@@ -24,15 +24,17 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
   const date = metadata?.date as string | undefined
   const tags = metadata?.tags as string[] | undefined
   const authors = metadata?.authors as string[] | undefined
+  const reviewer = metadata?.reviewer as string | undefined
+  const contributors = metadata?.contributors as string[] | undefined
 
   return (
-    <div className={`grid gap-8 lg:gap-12 items-start ${hasToc ? 'lg:grid-cols-[1fr_220px]' : 'grid-cols-1'}`}>
+    <div className={`grid gap-8 lg:gap-12 items-start ${hasToc ? 'lg:grid-cols-[1fr_200px]' : 'grid-cols-1'}`}>
       <article className="min-w-0">
         {title && (
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 mt-0">{title}</h1>
         )}
         {(authors || date) && (
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted mb-8">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-muted mb-6">
             {authors && authors.length > 0 && (
               <span className="font-medium text-foreground">{authors.join(', ')}</span>
             )}
@@ -42,12 +44,16 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
             )}
           </div>
         )}
+
+        {/* 상단 접이식 목차 */}
+        {hasToc && <TopToc toc={toc} />}
+
         <div className="[&>h1:first-child]:hidden">
           {children}
         </div>
 
         {(title || tags) && (
-          <div className="mt-8 lg:mt-12 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4">
+          <div className="mt-8 lg:mt-12 pt-6 border-t border-border flex flex-wrap items-center justify-between gap-4 lg:hidden">
             {tags && tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {tags.map(tag => (
@@ -61,7 +67,6 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
                 ))}
               </div>
             )}
-            {title && <ShareButtons title={title} />}
           </div>
         )}
 
@@ -90,10 +95,16 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
           <Comments />
         </div>
       </article>
-      {hasToc && (
-        <aside className="hidden lg:block sticky top-8">
-          <Toc toc={toc} />
-        </aside>
+
+      {/* 우측 사이드바: 메타정보 + 공유 */}
+      {hasToc && title && (
+        <ArticleSidebar
+          authors={authors}
+          reviewer={reviewer}
+          contributors={contributors}
+          tags={tags}
+          title={title}
+        />
       )}
     </div>
   )

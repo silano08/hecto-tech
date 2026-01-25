@@ -1,8 +1,10 @@
 import { Noto_Sans_KR, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from 'next-themes'
+import { LanguageProvider } from '@/components/LanguageProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ConsoleEasterEgg from '@/components/ConsoleEasterEgg'
+import CoffeeChatEasterEgg from '@/components/CoffeeChatEasterEgg'
 import './globals.css'
 
 const notoSansKR = Noto_Sans_KR({
@@ -36,20 +38,11 @@ export const metadata = {
     siteName: '헥토파이낸셜 기술 블로그',
     title: '헥토파이낸셜 기술 블로그',
     description: '헥토파이낸셜 개발팀의 기술 블로그입니다. 핀테크, 백엔드, 프론트엔드, DevOps 등 다양한 기술 이야기를 공유합니다.',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: '헥토파이낸셜 기술 블로그',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: '헥토파이낸셜 기술 블로그',
     description: '헥토파이낸셜 개발팀의 기술 블로그입니다.',
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -79,14 +72,17 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
         <ConsoleEasterEgg />
+        <CoffeeChatEasterEgg />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <LanguageProvider>
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
+              <Navbar />
+              <main className="flex-1">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

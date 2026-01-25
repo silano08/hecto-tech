@@ -2,8 +2,10 @@
 
 @theme {
   --color-primary: #ff6114;
-  --color-muted: #6b7280;
-  --color-border: #e5e7eb;
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
 }
 
 :root {
@@ -14,11 +16,20 @@
   --border: #e5e7eb;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --muted: #9ca3af;
+    --border: #374151;
+  }
+}
+
 .dark {
   --background: #000000;
   --foreground: #ffffff;
   --muted: #9ca3af;
-  --border: #1f2937;
+  --border: #374151;
 }
 
 @layer base {
@@ -96,6 +107,7 @@
     border-radius: 0.25rem;
     font-size: 0.875rem;
     font-family: var(--font-jetbrains-mono), monospace;
+    color: var(--foreground);
   }
 
   pre {
@@ -110,6 +122,7 @@
   pre code {
     background: transparent;
     padding: 0;
+    color: inherit;
   }
 
   blockquote {
@@ -142,6 +155,7 @@
     border: 1px solid var(--border);
     padding: 0.75rem;
     text-align: left;
+    color: var(--foreground);
   }
 
   th {
@@ -155,12 +169,34 @@
   }
 }
 
-.dark code {
-  background-color: #1f2937;
+/* Dark mode specific styles */
+@media (prefers-color-scheme: dark) {
+  code:not(pre code) {
+    background-color: #374151;
+  }
+
+  th {
+    background-color: #1f2937;
+  }
+}
+
+.dark code:not(pre code) {
+  background-color: #374151;
 }
 
 .dark th {
   background-color: #1f2937;
+}
+
+/* Input and form elements dark mode */
+input, textarea, select {
+  background-color: var(--background);
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--muted);
 }
 
 /* Shiki / rehype-pretty-code styles */
@@ -217,4 +253,116 @@ figcaption[data-rehype-pretty-code-title] + pre {
   margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+/* Button dark mode fixes */
+button {
+  color: inherit;
+}
+
+/* Fix for gray backgrounds in dark mode */
+@media (prefers-color-scheme: dark) {
+  .bg-gray-50 {
+    background-color: #111827 !important;
+  }
+
+  .bg-gray-100 {
+    background-color: #1f2937 !important;
+  }
+}
+
+.dark .bg-gray-50 {
+  background-color: #111827 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #1f2937 !important;
+}
+
+/* Tech Blog Hero Banner - Aggressive Style */
+.tech-blog-banner {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #0b0c10;
+  color: #ffffff;
+}
+
+.banner-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      800px circle at 15% 30%,
+      rgba(255, 120, 0, 0.35),
+      transparent 45%
+    ),
+    radial-gradient(
+      600px circle at 85% 70%,
+      rgba(255, 160, 60, 0.25),
+      transparent 50%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025),
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  pointer-events: none;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 72px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.banner-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  color: #ff7a00;
+  margin-bottom: 18px;
+}
+
+.banner-title {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1.15;
+  margin: 0 0 22px;
+  color: #ffffff;
+  text-shadow: 0 0 24px rgba(255, 122, 0, 0.35);
+}
+
+.banner-subtitle {
+  font-size: 17px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 520px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .tech-blog-banner {
+    height: 320px;
+  }
+
+  .banner-content {
+    padding: 44px 28px;
+  }
+
+  .banner-title {
+    font-size: 34px;
+  }
+
+  .banner-subtitle {
+    font-size: 15px;
+  }
 }

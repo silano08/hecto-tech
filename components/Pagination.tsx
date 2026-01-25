@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 type Props = {
@@ -8,11 +11,21 @@ type Props = {
 }
 
 export default function Pagination({ currentPage, totalPages, basePath = '' }: Props) {
+  const searchParams = useSearchParams()
+
   if (totalPages <= 1) return null
 
   const getPageUrl = (page: number) => {
-    if (page === 1) return basePath || '/'
-    return `${basePath}?page=${page}`
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (page === 1) {
+      params.delete('page')
+    } else {
+      params.set('page', String(page))
+    }
+
+    const queryString = params.toString()
+    return queryString ? `${basePath || '/'}?${queryString}` : basePath || '/'
   }
 
   const pages: (number | 'ellipsis')[] = []

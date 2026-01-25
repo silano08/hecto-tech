@@ -1,21 +1,22 @@
 import { getPosts } from '@/lib/get-posts'
- 
+
 const CONFIG = {
   title: '헥토파이낸셜 기술 블로그',
   siteUrl: 'https://tech.hectofinancial.co.kr',
   description: 'Latest blog posts',
   lang: 'en-us'
 }
- 
+
 export async function GET() {
   const allPosts = await getPosts()
   const posts = allPosts
+    .filter(post => post.frontMatter?.date)
     .map(
       post => `    <item>
-        <title>${post.title}</title>
-        <description>${post.frontMatter.description}</description>
+        <title>${post.frontMatter?.title || post.title || 'Untitled'}</title>
+        <description>${post.frontMatter?.description || ''}</description>
         <link>${CONFIG.siteUrl}${post.route}</link>
-        <pubDate>${new Date(post.frontMatter.date).toUTCString()}</pubDate>
+        <pubDate>${new Date(post.frontMatter.date!).toUTCString()}</pubDate>
     </item>`
     )
     .join('\n')
@@ -29,7 +30,7 @@ export async function GET() {
 ${posts}
   </channel>
 </rss>`
- 
+
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/rss+xml'

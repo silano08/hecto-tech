@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import PostCard from '@/components/PostCard'
 import Pagination from '@/components/Pagination'
 import { getPosts, getTags } from '@/lib/get-posts'
@@ -29,7 +30,7 @@ export default async function TagPage(props: Props) {
   const tag = decodeURIComponent(params.tag)
   const allPosts = await getPosts()
   const filteredPosts = allPosts.filter(post =>
-    post.frontMatter.tags.includes(tag)
+    post.frontMatter?.tags?.includes(tag)
   )
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
@@ -44,11 +45,13 @@ export default async function TagPage(props: Props) {
       {posts.map(post => (
         <PostCard key={post.route} post={post} />
       ))}
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        basePath={`/tags/${params.tag}`}
-      />
+      <Suspense fallback={null}>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          basePath={`/tags/${params.tag}`}
+        />
+      </Suspense>
     </>
   )
 }
