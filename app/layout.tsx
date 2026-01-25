@@ -4,6 +4,7 @@ import { LanguageProvider } from '@/components/LanguageProvider'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ConsoleEasterEgg from '@/components/ConsoleEasterEgg'
+import CoffeeChatEasterEgg from '@/components/CoffeeChatEasterEgg'
 import './globals.css'
 
 const notoSansKR = Noto_Sans_KR({
@@ -71,6 +72,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <body className={`${notoSansKR.variable} ${jetbrainsMono.variable}`}>
         <ConsoleEasterEgg />
+        <CoffeeChatEasterEgg />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <LanguageProvider>
             <div className="max-w-5xl mx-auto px-4 sm:px-6 min-h-screen flex flex-col">
