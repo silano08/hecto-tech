@@ -3,19 +3,14 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLanguage } from './LanguageProvider'
+import type { PostFrontMatter } from '@/types/post'
 
 interface PostCardProps {
   post: {
     route: string
     title?: string
-    frontMatter?: {
-      title?: string
-      description?: string
-      date?: string
-      tags?: string[]
-      authors?: string[]
-      thumbnail?: string
-    }
+    frontMatter?: PostFrontMatter
+    readingTime?: number
   }
 }
 
@@ -24,9 +19,14 @@ export default function PostCard({ post }: PostCardProps) {
   const title = post.frontMatter?.title || post.title || 'Untitled'
   const description = post.frontMatter?.description
   const date = post.frontMatter?.date
-  const authors = post.frontMatter?.authors
+  const authors = post.frontMatter?.authors?.length
+    ? post.frontMatter.authors
+    : post.frontMatter?.author
+      ? [post.frontMatter.author]
+      : undefined
   const tags = post.frontMatter?.tags
   const thumbnail = post.frontMatter?.thumbnail
+  const readingTime = post.readingTime
 
   const formatDate = (dateStr: string) => {
     const locale = language === 'ko' ? 'ko-KR' : 'en-US'
@@ -84,7 +84,13 @@ export default function PostCard({ post }: PostCardProps) {
             {date && (
               <time>{formatDate(date)}</time>
             )}
-            {((authors && authors.length > 0) || date) && tags && tags.length > 0 && (
+            {((authors && authors.length > 0) || date) && readingTime && (
+              <span className="text-border">|</span>
+            )}
+            {readingTime && (
+              <span>{readingTime} min read</span>
+            )}
+            {((authors && authors.length > 0) || date || readingTime) && tags && tags.length > 0 && (
               <span className="text-border">|</span>
             )}
             {tags && tags.length > 0 && (
