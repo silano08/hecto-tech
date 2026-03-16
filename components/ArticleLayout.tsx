@@ -5,6 +5,7 @@ import ArticleSidebar from '@/components/ArticleSidebar'
 import Comments from '@/components/Comments'
 import PostNavigation from '@/components/PostNavigation'
 import RelatedPosts from '@/components/RelatedPosts'
+import { calculateReadingTime } from '@/lib/reading-time'
 
 interface TocItem {
   id: string
@@ -16,16 +17,20 @@ interface ArticleLayoutProps {
   children: React.ReactNode
   toc?: TocItem[]
   metadata?: Record<string, unknown>
+  sourceCode?: string
 }
 
-export default function ArticleLayout({ children, toc, metadata }: ArticleLayoutProps) {
+export default function ArticleLayout({ children, toc, metadata, sourceCode }: ArticleLayoutProps) {
   const hasToc = toc && toc.length > 0
   const title = metadata?.title as string | undefined
   const date = metadata?.date as string | undefined
   const tags = metadata?.tags as string[] | undefined
-  const authors = metadata?.authors as string[] | undefined
+  const metaAuthors = metadata?.authors as string[] | undefined
+  const metaAuthor = metadata?.author as string | undefined
+  const authors = metaAuthors?.length ? metaAuthors : metaAuthor ? [metaAuthor] : undefined
   const reviewer = metadata?.reviewer as string | undefined
   const contributors = metadata?.contributors as string[] | undefined
+  const readingTime = sourceCode ? calculateReadingTime(sourceCode) : undefined
 
   return (
     <div className={`grid gap-8 lg:gap-12 items-start ${hasToc ? 'lg:grid-cols-[1fr_200px]' : 'grid-cols-1'}`}>
@@ -41,6 +46,12 @@ export default function ArticleLayout({ children, toc, metadata }: ArticleLayout
             {authors && date && <span>·</span>}
             {date && (
               <time>{new Date(date).toLocaleDateString('ko-KR')}</time>
+            )}
+            {readingTime && (
+              <>
+                <span>·</span>
+                <span>{readingTime} min read</span>
+              </>
             )}
           </div>
         )}

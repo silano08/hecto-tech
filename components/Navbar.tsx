@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ThemeToggle from '@/components/ThemeToggle'
 import LanguageToggle from '@/components/LanguageToggle'
+import WriteButton from '@/components/editor/WriteButton'
 
 export default function Navbar() {
   return (
@@ -11,6 +12,7 @@ export default function Navbar() {
         </Link>
 
         <div className="flex items-center gap-2">
+          <WriteButton />
           <LanguageToggle />
           <ThemeToggle />
         </div>

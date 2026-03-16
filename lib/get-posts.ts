@@ -1,22 +1,26 @@
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 import { normalizePages } from 'nextra/normalize-pages'
 import { getPageMap } from 'nextra/page-map'
-import type { Category } from '@/types/post'
+import type { Category, PostFrontMatter } from '@/types/post'
+import { calculateReadingTime } from './reading-time'
 
 export interface Post {
   route: string
   name: string
   title?: string
-  frontMatter: {
-    title?: string
-    description?: string
-    date?: string
-    tags?: string[]
-    authors?: string[]
-    reviewer?: string
-    contributors?: string[]
-    thumbnail?: string
-    category?: Category
+  frontMatter: PostFrontMatter
+  readingTime?: number
+}
+
+export function getAuthors(frontMatter: PostFrontMatter): string[] {
+  if (frontMatter.authors && frontMatter.authors.length > 0) {
+    return frontMatter.authors
   }
+  if (frontMatter.author) {
+    return [frontMatter.author]
+  }
+  return []
 }
 
 export async function getPosts(): Promise<Post[]> {
@@ -24,13 +28,36 @@ export async function getPosts(): Promise<Post[]> {
     list: await getPageMap('/posts'),
     route: '/posts'
   })
-  return directories
+
+  const isProduction = process.env.NODE_ENV === 'production'
+
+  const posts = directories
     .filter(post => post.name !== 'index')
+    .filter(post => {
+      if (isProduction) {
+        return post.frontMatter?.draft !== true
+      }
+      return true
+    })
     .sort((a, b) => {
       const dateA = a.frontMatter?.date ? new Date(a.frontMatter.date).getTime() : 0
       const dateB = b.frontMatter?.date ? new Date(b.frontMatter.date).getTime() : 0
       return dateB - dateA
     }) as Post[]
+
+  const postsWithReadingTime = await Promise.all(
+    posts.map(async (post) => {
+      try {
+        const filePath = join(process.cwd(), 'content', 'posts', `${post.name}.mdx`)
+        const content = await readFile(filePath, 'utf-8')
+        return { ...post, readingTime: calculateReadingTime(content) }
+      } catch {
+        return { ...post, readingTime: undefined }
+      }
+    })
+  )
+
+  return postsWithReadingTime
 }
 
 export async function getTags(): Promise<string[]> {
