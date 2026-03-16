@@ -9,12 +9,21 @@ export async function GET() {
     )
   }
 
+  const state = crypto.randomUUID()
+
   const params = new URLSearchParams({
     client_id: clientId,
     redirect_uri: `${siteUrl}/api/auth/github/callback`,
-    scope: 'repo',
-    state: crypto.randomUUID(),
+    scope: 'public_repo',
+    state,
   })
 
-  return Response.redirect(`https://github.com/login/oauth/authorize?${params}`)
+  // state를 쿠키에 저장하여 callback에서 검증
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: `https://github.com/login/oauth/authorize?${params}`,
+      'Set-Cookie': `oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax; Max-Age=600`,
+    },
+  })
 }
