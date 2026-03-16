@@ -59,7 +59,7 @@ export default function ArticleLayout({ children, toc, metadata, sourceCode }: A
         {/* 상단 접이식 목차 */}
         {hasToc && <TopToc toc={toc} />}
 
-        <div className="[&>h1:first-child]:hidden">
+        <div>
           {children}
         </div>
 

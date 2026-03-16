@@ -37,6 +37,7 @@ export default function FrontmatterForm({ value, onChange }: FrontmatterFormProp
   }
 
   const handleTagKeyDown = (e: React.KeyboardEvent) => {
+    if (e.nativeEvent.isComposing) return  // 한글 IME 조합 중이면 무시
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault()
       addTag()
