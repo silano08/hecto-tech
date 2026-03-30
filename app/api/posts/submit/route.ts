@@ -1,5 +1,5 @@
 import { getTokenFromCookie } from '@/lib/auth'
-import { createBranch, commitFile, createPullRequest, getDefaultBranchSha } from '@/lib/github'
+import { createBranch, commitFile, createPullRequest, getDefaultBranchSha, fileExists } from '@/lib/github'
 
 interface SubmitBody {
   title: string
@@ -52,20 +52,29 @@ export async function POST(request: Request) {
     return Response.json({ error: validationError }, { status: 400 })
   }
 
-  const slug = generateSlug(body.title)
+  const baseSlug = generateSlug(body.title)
 
   // path traversal 방지
-  if (!slug || slug.includes('..') || slug.includes('/') || slug.includes('\\')) {
+  if (!baseSlug || baseSlug.includes('..') || baseSlug.includes('/') || baseSlug.includes('\\')) {
     return Response.json({ error: '유효하지 않은 제목입니다' }, { status: 400 })
   }
-
-  const branchName = `post/${slug}-${Date.now()}`
-  const filePath = `content/posts/${slug}.mdx`
-  const fileContent = buildMdxContent(body, githubUser.login)
 
   const owner = process.env.GITHUB_OWNER!
   const repo = process.env.GITHUB_REPO!
   const defaultBranch = process.env.GITHUB_DEFAULT_BRANCH || 'main'
+
+  // 중복 파일명 체크 → 자동 넘버링
+  let slug = baseSlug
+  let filePath = `content/posts/${slug}.mdx`
+  for (let i = 2; i <= 99; i++) {
+    const exists = await fileExists(token, owner, repo, filePath, defaultBranch)
+    if (!exists) break
+    slug = `${baseSlug}-${i}`
+    filePath = `content/posts/${slug}.mdx`
+  }
+
+  const branchName = `post/${slug}-${Date.now()}`
+  const fileContent = buildMdxContent(body, githubUser.login)
 
   try {
     const sha = await getDefaultBranchSha(token, owner, repo, defaultBranch)

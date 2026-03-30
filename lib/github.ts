@@ -54,6 +54,16 @@ export async function commitFile(
   if (!res.ok) throw new Error(`Failed to commit file: ${res.status}`)
 }
 
+export async function fileExists(
+  token: string, owner: string, repo: string, path: string, branch: string
+): Promise<boolean> {
+  const res = await fetch(
+    `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}?ref=${branch}`,
+    { headers: headers(token) }
+  )
+  return res.ok
+}
+
 export async function createPullRequest(
   token: string, owner: string, repo: string,
   params: { title: string; body: string; head: string; base: string }
