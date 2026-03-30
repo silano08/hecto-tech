@@ -18,7 +18,7 @@ export default function Comments() {
     <Giscus
       repo={repo as `${string}/${string}`}
       repoId={repoId}
-      category="Announcements"
+      category="General"
       categoryId={categoryId}
       mapping="pathname"
       strict="0"
